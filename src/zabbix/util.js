@@ -77,7 +77,7 @@ const getTrend = async (service, hostId, sensorId, unixTimeStamp, limit) => {
 			output: ['itemid', 'clock', 'num', 'value_avg'],
 			hostids: hostId,
 			itemids: sensorId,
-			time_from: unixTimeStamp,
+			time_till: unixTimeStamp,
 			limit,
 		});
 
