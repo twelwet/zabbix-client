@@ -1,5 +1,12 @@
 const zabbix = require('./service');
-const { getSensor, getInterface, getHostSummary, getTrend, getHours } = require('./util');
+const {
+	getSensor,
+	getInterface,
+	getHostSummary,
+	getTrend,
+	getHours,
+	getLinkDay,
+} = require('./util');
 const { getBar, mockBar } = require('../progress-bar/progress');
 const chalk = require('chalk');
 
@@ -20,7 +27,7 @@ const getDailyDetails = async (props) => {
 		const targetInterface = await getInterface(service, targetHost.id);
 		const trend = await getTrend(service, targetHost.id, targetSensor.id, unix, limit);
 		const hours = getHours(trend);
-		const linkDay = hours.up >= hours.down ? 1 : 0;
+		const linkDay = getLinkDay('1_from_24', hours); // methods: '1_from_24' or '12_from_24'
 
 		const hostSummary = getHostSummary(
 			mode,

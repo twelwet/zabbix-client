@@ -77,13 +77,19 @@ const getTrend = async (service, hostId, sensorId, unixTimeStamp, limit) => {
 			output: ['itemid', 'clock', 'num', 'value_avg'],
 			hostids: hostId,
 			itemids: sensorId,
-			time_till: unixTimeStamp,
+			time_from: unixTimeStamp,
 			limit,
 		});
 
 		const result = [];
 		for (const rawDataItem of rawData) {
-			result.push(trendAdapter(rawDataItem));
+			const dataItem = trendAdapter(rawDataItem);
+			const timeDelta = Number(rawDataItem.clock) - unixTimeStamp;
+			if (timeDelta > 86400) {
+				dataItem.time = moment.unix(unixTimeStamp).format('DD.MM.YYYY HH:mm:ss');
+				dataItem.value = 0;
+			}
+			result.push(dataItem);
 		}
 		return result;
 	} catch (error) {
@@ -104,6 +110,15 @@ const getHours = (dailyData) => {
 	};
 };
 
+const getLinkDay = (methodName, hours) => {
+	switch (methodName) {
+		case '1_from_24':
+			return hours.up >= 1 ? 1 : 0;
+		case '12_from_24':
+			return hours.up >= hours.down ? 1 : 0;
+	}
+};
+
 module.exports = {
 	getUTSFromDate,
 	getHostsByGroupId,
@@ -113,4 +128,5 @@ module.exports = {
 	getHostSummary,
 	getTrend,
 	getHours,
+	getLinkDay,
 };
