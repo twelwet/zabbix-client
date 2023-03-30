@@ -3,8 +3,8 @@ const getPeriodDetails = require('./zabbix/period-details');
 const { saveBilling } = require('./util');
 
 const main = async () => {
-	const { groupName, dateItem, daysCount } = await getCliAnswers();
-	const periodDetails = await getPeriodDetails({ groupName, dateItem, daysCount });
+	const { groupName, dateItem, daysCount, linkDayMethod } = await getCliAnswers();
+	const periodDetails = await getPeriodDetails({ groupName, dateItem, daysCount, linkDayMethod });
 	saveBilling(periodDetails, groupName);
 };
 

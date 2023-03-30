@@ -12,7 +12,7 @@ const chalk = require('chalk');
 
 const getDailyDetails = async (props) => {
 	const service = zabbix;
-	const { mode, allHosts, date, limit, isBar } = props;
+	const { mode, allHosts, date, limit, isBar, linkDayMethod } = props;
 	const { unix, humanDate } = date;
 
 	const result = [];
@@ -27,7 +27,7 @@ const getDailyDetails = async (props) => {
 		const targetInterface = await getInterface(service, targetHost.id);
 		const trend = await getTrend(service, targetHost.id, targetSensor.id, unix, limit);
 		const hours = getHours(trend);
-		const linkDay = getLinkDay('1_from_24', hours); // methods: '1_from_24' or '12_from_24'
+		const linkDay = getLinkDay(linkDayMethod, hours);
 
 		const hostSummary = getHostSummary(
 			mode,

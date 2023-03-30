@@ -3,6 +3,12 @@ const { CliConfig } = require('./cli-config');
 const cliQuestions = [
 	{
 		type: 'list',
+		name: 'linkDayMethod',
+		message: 'Способ обсчета канал-дней:',
+		choices: Object.keys(CliConfig.LINKDAY_METHODS),
+	},
+	{
+		type: 'list',
 		name: 'groupName',
 		message: 'Выберите группу хостов:   ',
 		choices: Object.keys(CliConfig.GROUPS_TO_DATES),

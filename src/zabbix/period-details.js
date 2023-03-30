@@ -2,6 +2,7 @@ const moment = require('moment');
 const getDailyDetails = require('./daily-details');
 const zabbix = require('./service');
 const { getAllGroups, getHostsByGroupId } = require('./util');
+const { CliConfig } = require('../cli-service/cli-config');
 
 const getDays = (dateItem, daysCount) => {
 	const days = [];
@@ -18,15 +19,16 @@ const getDays = (dateItem, daysCount) => {
 	return days;
 };
 
-const getDailyProps = (allHosts, date, limit = 24, isBar = true, mode = 'prod') => ({
+const getDailyProps = (allHosts, date, linkDayMethod, limit = 24, isBar = true, mode = 'prod') => ({
 	allHosts,
 	date,
 	limit,
 	isBar,
 	mode, // 'dev' | 'prod'
+	linkDayMethod: CliConfig.LINKDAY_METHODS[linkDayMethod],
 });
 
-const getPeriodDetails = async ({ groupName, dateItem, daysCount }) => {
+const getPeriodDetails = async ({ groupName, dateItem, daysCount, linkDayMethod }) => {
 	const service = zabbix;
 	const days = getDays(dateItem, daysCount);
 
@@ -37,7 +39,7 @@ const getPeriodDetails = async ({ groupName, dateItem, daysCount }) => {
 	const result = [];
 
 	for (const day of days) {
-		const props = getDailyProps(allHosts, day);
+		const props = getDailyProps(allHosts, day, linkDayMethod);
 		console.log('---');
 
 		const { data, date } = await getDailyDetails(props);
