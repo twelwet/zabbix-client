@@ -6,6 +6,10 @@ const CliConfig = {
 		[`${process.env.ZABBIX_HOST_GROUP_1}`]: new Date('2022-12-01T00:00:00'),
 		[`${process.env.ZABBIX_HOST_GROUP_2}`]: new Date('2022-12-01T00:00:00'),
 		[`${process.env.ZABBIX_HOST_GROUP_3}`]: new Date('2022-12-01T00:00:00'),
+		[`${process.env.ZABBIX_HOST_GROUP_4}`]: new Date('2022-12-01T00:00:00'),
+		[`${process.env.ZABBIX_HOST_GROUP_5}`]: new Date('2022-12-01T00:00:00'),
+		[`${process.env.ZABBIX_HOST_GROUP_6}`]: new Date('2022-12-01T00:00:00'),
+		[`${process.env.ZABBIX_HOST_GROUP_7}`]: new Date('2022-12-01T00:00:00'),
 	},
 	LINKDAY_METHODS: {
 		['[ФВФ] Хост онлайн не менее 1 ч/сут']: '1_from_24',
